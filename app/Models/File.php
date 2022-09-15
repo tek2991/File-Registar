@@ -10,6 +10,7 @@ class File extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'file_number',
         'parent_office_id',
         'current_office_id',
     ];

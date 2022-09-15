@@ -15,6 +15,7 @@
 
         <!-- Styles -->
         @livewireStyles
+        @powerGridStyles
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -40,5 +41,6 @@
         @stack('modals')
 
         @livewireScripts
+        @powerGridScripts
     </body>
 </html>

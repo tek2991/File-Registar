@@ -14,10 +14,72 @@ class OfficeSeeder extends Seeder
      */
     public function run()
     {
-        // Define the number of offices to create
-        $numberOfOffices = 10;
-
+        // Define offices object array
+        $offices = [
+            [
+                'initials' => 'CPC',
+                'name' => 'Central Processing Center',
+            ],
+            [
+                'initials' => 'TECH',
+                'name' => 'Technology',
+            ],
+            [
+                'initials' => 'ACCT',
+                'name' => 'Accounts',
+            ],
+            [
+                'initials' => 'CIFA',
+                'name' => 'Chief Internal Finalcial Advisor',
+            ],
+            [
+                'initials' => 'PLI',
+                'name' => 'Postal Life Insurance',
+            ],
+            [
+                'initials' => 'PG',
+                'name' => 'Public Grievances',
+            ],
+            [
+                'initials' => 'WLF',
+                'name' => 'Welfare',
+            ],
+            [
+                'initials' => 'STAFF',
+                'name' => 'Staff Section',
+            ],
+            [
+                'initials' => 'INV',
+                'name' => 'Investigation',
+            ],
+            [
+                'initials' => 'VIG',
+                'name' => 'Vigilance',
+            ],
+            [
+                'initials' => 'PCL',
+                'name' => 'Parcel Branch',
+            ],
+            [
+                'initials' => 'MAILS',
+                'name' => 'Mails Section',
+            ],
+            [
+                'initials' => 'BD',
+                'name' => 'Business Development',
+            ],
+            [
+                'initials' => 'AEE',
+                'name' => 'Assistant Engineer (Electrical)',
+            ],
+            [
+                'initials' => 'AEC',
+                'name' => 'Assistant Engineer (Civil)'
+            ]
+        ];
         // Create the offices
-        \App\Models\Office::factory()->count($numberOfOffices)->create();
+        foreach ($offices as $office) {
+            \App\Models\Office::create($office);
+        }
     }
 }

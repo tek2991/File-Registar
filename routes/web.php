@@ -25,4 +25,16 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::resource('office', App\Http\Controllers\OfficeController::class)->only([
+        'index', 'create', 'store', 'edit', 'update'
+    ]);
+
+    Route::resource('file', App\Http\Controllers\FileController::class)->only([
+        'index', 'create', 'store', 'edit', 'update'
+    ]);
+
+    Route::resource('user', App\Http\Controllers\UserController::class)->only([
+        'index'
+    ]);
 });

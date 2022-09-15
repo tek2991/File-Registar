@@ -21,6 +21,7 @@ class FileFactory extends Factory
         $office = Office::inRandomOrder()->first();
         return [
             'name' => $this->faker->unique()->name,
+            'file_number' => $office->initials . $this->faker->unique()->randomNumber(6),
             'parent_office_id' => $office->id,
             'current_office_id' => $office->id,
         ];

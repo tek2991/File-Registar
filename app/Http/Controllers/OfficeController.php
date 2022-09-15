@@ -14,7 +14,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        //
+        return view('office.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class OfficeController extends Controller
      */
     public function create()
     {
-        //
+        return view('office.create');
     }
 
     /**
@@ -35,7 +35,12 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'initials' => 'required|max:18',
+            'name' => 'required|max:255',
+        ]);
+        $office = Office::create($validated);
+        return redirect()->route('office.index', $office)->with('success', 'Office created successfully.');
     }
 
     /**
@@ -57,7 +62,7 @@ class OfficeController extends Controller
      */
     public function edit(Office $office)
     {
-        //
+        return view('office.edit', compact('office'));
     }
 
     /**
@@ -69,7 +74,12 @@ class OfficeController extends Controller
      */
     public function update(Request $request, Office $office)
     {
-        //
+        $validated = $request->validate([
+            'initials' => 'required|max:18',
+            'name' => 'required|max:255',
+        ]);
+        $office->update($validated);
+        return redirect()->route('office.index', $office)->with('success', 'Office updated successfully.');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Office;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -14,7 +15,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        return view('file.index');
     }
 
     /**
@@ -24,7 +25,8 @@ class FileController extends Controller
      */
     public function create()
     {
-        //
+        $offices = Office::all();
+        return view('file.create', compact('offices'));
     }
 
     /**
@@ -35,7 +37,24 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'parent_office_id' => 'required|exists:offices,id',
+            'name' => 'required|string|max:255',
+        ]);
+
+        $parent_office = Office::find($validated['parent_office_id']);
+        // get last six digits of timestamp
+        $file_number = substr((string)time(), -6);
+        $file_number = $parent_office->initials . '-' . $file_number;
+
+        // Add file number to validated data
+        $validated['file_number'] = $file_number;
+        // Add current office to validated data
+        $validated['current_office_id'] = $validated['parent_office_id'];
+
+        $file = File::create($validated);
+
+        return redirect()->route('file.index')->with('success', 'File created successfully.');
     }
 
     /**
@@ -57,7 +76,8 @@ class FileController extends Controller
      */
     public function edit(File $file)
     {
-        //
+        $offices = Office::all();
+        return view('file.edit', compact('file', 'offices'));
     }
 
     /**
@@ -69,7 +89,15 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        //
+        $validated = $request->validate([
+            'parent_office_id' => 'required|exists:offices,id',
+            'name' => 'required|string|max:255',
+            'file_number' => 'required|string|max:255|unique:files,file_number,' . $file->id,
+        ]);
+
+        $file->update($validated);
+
+        return redirect()->route('file.index')->with('success', 'File updated successfully.');
     }
 
     /**

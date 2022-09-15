@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('file_number');
             $table->foreignId('parent_office_id')->constrained('offices');
             $table->foreignId('current_office_id')->constrained('offices');
             $table->timestamps();
