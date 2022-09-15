@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        // Seed the offices
+        $this->call(OfficeSeeder::class);
+        // Seed the files
+        $this->call(FileSeeder::class);
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
