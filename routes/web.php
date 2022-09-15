@@ -41,4 +41,8 @@ Route::middleware([
     Route::resource('user', App\Http\Controllers\UserController::class)->only([
         'index'
     ]);
+
+    Route::put('file-receive/{file}', [App\Http\Controllers\FileMovementController::class, 'receiveUpdate'])->name('file.receive.update');
+    Route::get('file-dispatch/{file}', [App\Http\Controllers\FileMovementController::class, 'dispatchView'])->name('file.dispatch');
+    Route::put('file-dispatch/{file}', [App\Http\Controllers\FileMovementController::class, 'dispatchUpdate'])->name('file.dispatch.update');
 });

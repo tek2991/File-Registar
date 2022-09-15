@@ -13,6 +13,7 @@ class File extends Model
         'file_number',
         'parent_office_id',
         'current_office_id',
+        'movement_id',
     ];
 
     public function parentOffice()
@@ -23,5 +24,10 @@ class File extends Model
     public function currentOffice()
     {
         return $this->belongsTo(Office::class, 'current_office_id');
+    }
+
+    public function movement()
+    {
+        return $this->belongsTo(Movement::class);
     }
 }

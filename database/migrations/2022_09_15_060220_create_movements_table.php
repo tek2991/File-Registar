@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignId('file_id')->constrained('files');
             $table->foreignId('from_office_id')->constrained('offices');
             $table->foreignId('to_office_id')->constrained('offices');
-            $table->dateTime('received_at');
-            $table->dateTime('dispatched_at');
+            $table->dateTime('received_at')->nullable();
+            $table->dateTime('dispatched_at')->nullable();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

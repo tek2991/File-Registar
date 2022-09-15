@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('file_number');
             $table->foreignId('parent_office_id')->constrained('offices');
             $table->foreignId('current_office_id')->constrained('offices');
+            $table->foreignId('movement_id')->nullable()->constrained('movements');
             $table->timestamps();
         });
     }

@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Movement;
+use App\Models\File;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
-final class MovementTable extends PowerGridComponent
+final class ReceivedFileTable extends PowerGridComponent
 {
     use ActionButton;
 
@@ -46,11 +46,19 @@ final class MovementTable extends PowerGridComponent
     /**
      * PowerGrid datasource.
      *
-     * @return Builder<\App\Models\Movement>
+     * @return Builder<\App\Models\File>
      */
     public function datasource(): Builder
     {
-        return Movement::query();
+        // Get the users office
+        $office = auth()->user()->office;
+        // Get the received file ids for the users office
+        $receivedFileIds = $office->received_file_ids();
+        return File::query()
+            ->whereIn('files.id', $receivedFileIds)
+            ->join('offices as parent_office', 'files.parent_office_id', '=', 'parent_office.id')
+            ->join('offices as current_office', 'files.current_office_id', '=', 'current_office.id')
+            ->select('files.*', 'parent_office.name as parent_office_name', 'current_office.name as current_office_name');
     }
 
     /*
@@ -85,36 +93,21 @@ final class MovementTable extends PowerGridComponent
     public function addColumns(): PowerGridEloquent
     {
         return PowerGrid::eloquent()
-            ->addColumn('office_id')
-            ->addColumn('office_name', function (Movement $model) {
-                return e($model->office->name);
+            ->addColumn('id')
+            ->addColumn('name')
+            ->addColumn('file_number')
+
+            /** Example of custom column using a closure **/
+            ->addColumn('name_lower', function (File $model) {
+                return strtolower(e($model->name));
             })
-            ->addColumn('file_id')
-            ->addColumn('file_name', function (Movement $model) {
-                return e($model->file->name);
-            })
-            ->addColumn('file_number', function (Movement $model) {
-                return e($model->file->file_number);
-            })
-            ->addColumn('from_office_id')
-            ->addColumn('from_office_name', function (Movement $model) {
-                return e($model->fromOffice->name);
-            })
-            ->addColumn('to_office_id')
-            ->addColumn('to_office_name', function (Movement $model) {
-                return e($model->toOffice->name);
-            })
-            ->addColumn('received_at')
-            ->addColumn('received_at_formatted', fn (Movement $model) => $model->received_at ? Carbon::parse($model->received_at)->format('d/m/Y H:i:s') : 'NA')
-            ->addColumn('dispatched_at')
-            ->addColumn('dispatched_at_formatted', fn (Movement $model) => $model->dispatched_at ? Carbon::parse($model->dispatched_at)->format('d/m/Y H:i:s') : 'NA')
-            ->addColumn('user_id')
-            ->addColumn('user_name', function (Movement $model) {
-                return e($model->user->name);
-            })
-            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Movement $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+
+            ->addColumn('parent_office_id')
+            ->addColumn('parent_office_name')
+            ->addColumn('current_office_id')
+            ->addColumn('current_office_name')
+            ->addColumn('created_at_formatted', fn (File $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
+            ->addColumn('updated_at_formatted', fn (File $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
     }
 
     /*
@@ -134,36 +127,17 @@ final class MovementTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('RECORDING OFFICE', 'office_name', 'office_id')
-                ->sortable()
-                ->searchable()
-                ->makeInputSelect(\App\Models\Office::all(), 'name', 'office_id'),
-
-            Column::make('FILE', 'file_name', 'file_id')
+            Column::make('FILE NAME', 'name')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('FILE NUMBER', 'file_number', 'file_id')
+            Column::make('FILE NUMBER', 'file_number')
                 ->sortable()
                 ->searchable(),
 
-            Column::make('FROM OFFICE', 'from_office_name', 'from_office_id')
+            Column::make('PARENT OFFICE', 'parent_office_name', 'parent_office_id')
                 ->sortable()
                 ->searchable(),
-
-            Column::make('TO OFFICE', 'to_office_name', 'to_office_id')
-                ->sortable()
-                ->searchable(),
-
-            Column::make('RECEIVED AT', 'received_at_formatted', 'received_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
-
-            Column::make('DISPATCHED AT', 'dispatched_at_formatted', 'dispatched_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
         ];
     }
 
@@ -176,26 +150,27 @@ final class MovementTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Movement Action Buttons.
+     * PowerGrid File Action Buttons.
      *
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('movement.edit', ['movement' => 'id']),
+        return [
+            Button::make('edit', 'Dispatch')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('file.dispatch', ['file' => 'id'])
+                ->target(''),
 
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('movement.destroy', ['movement' => 'id'])
+               ->route('file.destroy', ['file' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -206,7 +181,7 @@ final class MovementTable extends PowerGridComponent
     */
 
     /**
-     * PowerGrid Movement Action Rules.
+     * PowerGrid File Action Rules.
      *
      * @return array<int, RuleActions>
      */
@@ -218,7 +193,7 @@ final class MovementTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($movement) => $movement->id === 1)
+                ->when(fn($file) => $file->id === 1)
                 ->hide(),
         ];
     }

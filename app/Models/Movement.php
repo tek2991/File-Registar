@@ -14,6 +14,7 @@ class Movement extends Model
         'received_at',
         'dispatched_at',
         'user_id',
+        'remarks',
     ];
 
     protected $casts = [
