@@ -34,6 +34,10 @@ Route::middleware([
         'index', 'create', 'store', 'edit', 'update'
     ]);
 
+    Route::resource('movement', App\Http\Controllers\MovementController::class)->only([
+        'index',
+    ]);
+
     Route::resource('user', App\Http\Controllers\UserController::class)->only([
         'index'
     ]);

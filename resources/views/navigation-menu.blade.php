@@ -21,6 +21,9 @@
                     <x-jet-nav-link href="{{ route('file.index') }}" :active="request()->routeIs('file.*')">
                         {{ __('Files') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('movement.index') }}" :active="request()->routeIs('movement.*')">
+                        {{ __('Movements') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -151,6 +154,10 @@
             </x-jet-responsive-nav-link>
             <x-jet-responsive-nav-link href="{{ route('file.index') }}" :active="request()->routeIs('file.*')">
                 {{ __('File') }}
+            </x-jet-responsive-nav-link>
+            {{-- Movement --}}
+            <x-jet-responsive-nav-link href="{{ route('movement.index') }}" :active="request()->routeIs('movement.*')">
+                {{ __('Movement') }}
             </x-jet-responsive-nav-link>
         </div>
 
