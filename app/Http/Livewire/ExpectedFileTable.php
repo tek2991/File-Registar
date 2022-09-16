@@ -165,6 +165,7 @@ final class ExpectedFileTable extends PowerGridComponent
             Button::make('edit', 'Receive')
                 ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
                 ->route('file.receive.update', ['file' => 'id'])
+                ->method('PUT')
                 ->target(''),
 
             /*

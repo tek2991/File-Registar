@@ -25,17 +25,17 @@ class Office extends Model
 
     public function expected_file_ids()
     {
-        // Get the files whose current office is not this office
-        $files_not_in_this_office = File::where('current_office_id', '!=', $this->id)->get();
+        // Get the files whose current office is this office
+        $files_in_this_office = File::where('current_office_id', $this->id)->get();
 
         // Create an array of file ids
         $file_ids = [];
 
-        foreach ($files_not_in_this_office as $file) {
+        foreach ($files_in_this_office as $file) {
             // Check if the file has a movement
             if ($file->movement) {
-                // Check if the file's movement's to office is this office
-                if ($file->movement->to_office_id == $this->id) {
+                // Check if the file's movement's to office is this office and the file's movement's received_at is null
+                if ($file->movement->to_office_id == $this->id && $file->movement->received_at == null) {
                     // Add the file id to the array
                     $file_ids[] = $file->id;
                 }
@@ -48,7 +48,27 @@ class Office extends Model
 
     public function received_file_ids()
     {
-        // Get the file ids whose current office is this office
-        return File::where('current_office_id', $this->id)->pluck('id');
+        // Get the files whose current office is this office
+        $files_in_this_office = File::where('current_office_id', $this->id)->get();
+
+        // Create an array of file ids
+        $file_ids = [];
+
+        foreach ($files_in_this_office as $file) {
+            // Check if the file has a movement
+            if ($file->movement) {
+                // Check if the file's movement's to office is this office and the file's movement's received_at is not null
+                if ($file->movement->to_office_id == $this->id && $file->movement->received_at !== null) {
+                    // Add the file id to the array
+                    $file_ids[] = $file->id;
+                }
+            }else{
+                // Add the file id to the array
+                $file_ids[] = $file->id;
+            }
+        }
+
+        // Return the array of file ids
+        return $file_ids;
     }
 }

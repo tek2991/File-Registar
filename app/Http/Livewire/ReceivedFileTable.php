@@ -138,6 +138,10 @@ final class ReceivedFileTable extends PowerGridComponent
             Column::make('PARENT OFFICE', 'parent_office_name', 'parent_office_id')
                 ->sortable()
                 ->searchable(),
+
+            Column::make('CURRENT OFFICE', 'current_office_name', 'current_office_id')
+                ->sortable()
+                ->searchable(),
         ];
     }
 
