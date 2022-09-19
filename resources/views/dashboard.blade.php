@@ -21,7 +21,8 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-8 w-full">
                     <x-success-message />
-                    <h1 class="py-6 font-semibold text-xl text-right">Received files at {{ Auth::user()->office->name }}</h1>
+                    <h1 class="py-6 font-semibold text-xl text-right">Received files at {{ Auth::user()->office->name }}
+                    </h1>
                     <livewire:received-file-table />
                 </div>
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Office;
+use App\Models\Movement;
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -40,6 +41,7 @@ class FileController extends Controller
         $validated = $request->validate([
             'parent_office_id' => 'required|exists:offices,id',
             'name' => 'required|string|max:255',
+            'should_receive' => 'nullable|boolean',
         ]);
 
         $parent_office = Office::find($validated['parent_office_id']);
@@ -53,6 +55,25 @@ class FileController extends Controller
         $validated['current_office_id'] = $validated['parent_office_id'];
 
         $file = File::create($validated);
+        
+        // Check if file should be received
+        if ($request->should_receive) {
+            $movement = Movement::create([
+                'office_id' => auth()->user()->office_id,
+                'file_id' => $file->id,
+                'from_office_id' => $validated['parent_office_id'],
+                'to_office_id' => auth()->user()->office_id,
+                'received_at' => now(),
+                'dispatched_at' => now(),
+                'user_id' => auth()->user()->id,
+                'remarks' => 'Created and received',
+            ]);
+
+            $file->update([
+                'movement_id' => $movement->id,
+                'current_office_id' => auth()->user()->office_id,
+            ]);
+        }
 
         return redirect()->route('file.index')->with('success', 'File created successfully.');
     }

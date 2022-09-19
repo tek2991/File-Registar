@@ -96,7 +96,10 @@ final class ReceivedFileTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('file_number')
-
+            ->addColumn('file_link', function (File $file) {
+                // Create an a tag with the file number as the link text
+                return "<a href='" . route('file.show', [$file->id]) . "' target='' class='hover:underline text-blue-600'>{$file->file_number}</a>";
+            })
             /** Example of custom column using a closure **/
             ->addColumn('name_lower', function (File $model) {
                 return strtolower(e($model->name));
@@ -131,7 +134,7 @@ final class ReceivedFileTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('FILE NUMBER', 'file_number')
+            Column::make('FILE NUMBER', 'file_link', 'file_number')
                 ->sortable()
                 ->searchable(),
 

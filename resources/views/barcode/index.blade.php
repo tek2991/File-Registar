@@ -28,7 +28,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                 </svg>
-                                {{ __('Print') }}
+                                {{ __('Generate') }}
                             </x-jet-button>
                         </div>
                     </form>
@@ -57,9 +57,9 @@
                                     <tr>
                                         <td class="border px-4 py-2">
                                             <div>
-                                                <p class="font-bold">Name: {{ $file->name }}</p>
+                                                <p class="font-bold">{{ $file->name }}</p>
                                                 <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
-                                                <p class="font-bold">UID: {{ $file->file_number }} </p>
+                                                <p class="font-bold">{{ $file->file_number }} </p>
                                             </div>
                                         </td>
                                         {{-- If it is the last iteration and another data column and close the row --}}
@@ -73,9 +73,9 @@
                                 {{-- Add a data column --}}
                                 <td class="border px-4 py-2">
                                     <div>
-                                        <p class="font-bold">Name: {{ $file->name }}</p>
+                                        <p class="font-bold">{{ $file->name }}</p>
                                         <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
-                                        <p class="font-bold">UID: {{ $file->file_number }} </p>
+                                        <p class="font-bold">{{ $file->file_number }} </p>
                                     </div>
                                 </td>
                                 </tr>

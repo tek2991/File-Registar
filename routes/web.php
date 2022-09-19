@@ -45,6 +45,9 @@ Route::middleware([
 
     Route::get('barcode', [App\Http\Controllers\BarcodeController::class, 'index'])->name('barcode.index');
     Route::post('barcode/generate', [App\Http\Controllers\BarcodeController::class, 'generate'])->name('barcode.generate');
+    
+    Route::get('receive-other-files/{file}', [App\Http\Controllers\ReceiveOtherFilesController::class, 'index'])->name('receive-other-files.index');
+    Route::post('receive-other-files/{file}', [App\Http\Controllers\ReceiveOtherFilesController::class, 'store'])->name('receive-other-files.store');
 
     Route::put('file-receive/{file}', [App\Http\Controllers\FileMovementController::class, 'receiveUpdate'])->name('file.receive.update');
     Route::get('file-dispatch/{file}', [App\Http\Controllers\FileMovementController::class, 'dispatchView'])->name('file.dispatch');

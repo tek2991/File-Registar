@@ -92,6 +92,10 @@ final class FileTable extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('name')
             ->addColumn('file_number')
+            ->addColumn('file_link', function (File $file) {
+                // Create an a tag with the file number as the link text
+                return "<a href='" . route('file.show', [$file->id]) . "' target='' class='hover:underline text-blue-600'>{$file->file_number}</a>";
+            })
 
             /** Example of custom column using a closure **/
             ->addColumn('name_lower', function (File $model) {
@@ -127,7 +131,7 @@ final class FileTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('FILE NUMBER', 'file_number')
+            Column::make('FILE NUMBER', 'file_link', 'file_number')
                 ->sortable()
                 ->searchable(),
 
@@ -159,16 +163,14 @@ final class FileTable extends PowerGridComponent
     {
         return [
             Button::make('edit', 'Edit')
-                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                 ->route('file.edit', ['file' => 'id'])
                 ->target(''),
 
-
-            Button::make('show', 'View')
-                ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-                ->route('file.show', ['file' => 'id'])
+            Button::make('receive', 'Recv')
+                ->class('bg-orange-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
+                ->route('receive-other-files.index', ['file' => 'id'])
                 ->target('')
-
         ];
     }
 
