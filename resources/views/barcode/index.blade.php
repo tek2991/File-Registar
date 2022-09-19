@@ -55,7 +55,7 @@
                                 @if ($loop->iteration % 2 != 0)
                                     {{-- Start row and add a data column --}}
                                     <tr>
-                                        <td class="border px-4 py-2">
+                                        <td class="border px-4 py-2" style="width:50%">
                                             <div>
                                                 <p class="font-bold">{{ $file->name }}</p>
                                                 <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
@@ -64,14 +64,14 @@
                                         </td>
                                         {{-- If it is the last iteration and another data column and close the row --}}
                                         @if ($loop->last)
-                                            <td class="border px-4 py-2">
+                                            <td class="border px-4 py-2" style="width:50%">
                                                 
                                             </td>
                                     </tr>
                                 @endif
                             @else
                                 {{-- Add a data column --}}
-                                <td class="border px-4 py-2">
+                                <td class="border px-4 py-2" style="width:50%">
                                     <div>
                                         <p class="font-bold">{{ $file->name }}</p>
                                         <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
