@@ -65,7 +65,8 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-        //
+        $offices = Office::all();
+        return view('file.show', compact('file', 'offices'));
     }
 
     /**

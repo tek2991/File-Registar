@@ -3,10 +3,11 @@
 namespace App\Http\Livewire;
 
 use App\Models\File;
+use Milon\Barcode\DNS1D;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
+use PowerComponents\LivewirePowerGrid\Rules\{Rule, RuleActions};
 use PowerComponents\LivewirePowerGrid\{Button, Column, Exportable, Footer, Header, PowerGrid, PowerGridComponent, PowerGridEloquent};
 
 final class FileTable extends PowerGridComponent
@@ -162,12 +163,12 @@ final class FileTable extends PowerGridComponent
                 ->route('file.edit', ['file' => 'id'])
                 ->target(''),
 
-            /*
-           Button::make('destroy', 'Delete')
-               ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
-               ->route('file.destroy', ['file' => 'id'])
-               ->method('delete')
-               */
+
+            Button::make('show', 'View')
+                ->class('bg-green-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('file.show', ['file' => 'id'])
+                ->target('')
+
         ];
     }
 

@@ -13,6 +13,7 @@
         "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.5",
+        "milon/barcode": "^9.0",
         "power-components/livewire-powergrid": "^3.3"
     },
     "require-dev": {

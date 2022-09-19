@@ -24,6 +24,9 @@
                     <x-jet-nav-link href="{{ route('movement.index') }}" :active="request()->routeIs('movement.*')">
                         {{ __('Movements') }}
                     </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('barcode.index') }}" :active="request()->routeIs('barcode.*')">
+                        {{ __('Barcodes') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
@@ -158,6 +161,9 @@
             {{-- Movement --}}
             <x-jet-responsive-nav-link href="{{ route('movement.index') }}" :active="request()->routeIs('movement.*')">
                 {{ __('Movement') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('barcode.index') }}" :active="request()->routeIs('barcode.*')">
+                {{ __('Barcode') }}
             </x-jet-responsive-nav-link>
         </div>
 

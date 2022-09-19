@@ -31,7 +31,7 @@ Route::middleware([
     ]);
 
     Route::resource('file', App\Http\Controllers\FileController::class)->only([
-        'index', 'create', 'store', 'edit', 'update'
+        'index', 'show', 'create', 'store', 'edit', 'update'
     ]);
 
     Route::resource('movement', App\Http\Controllers\MovementController::class)->only([
@@ -41,6 +41,10 @@ Route::middleware([
     Route::resource('user', App\Http\Controllers\UserController::class)->only([
         'index'
     ]);
+
+
+    Route::get('barcode', [App\Http\Controllers\BarcodeController::class, 'index'])->name('barcode.index');
+    Route::post('barcode/generate', [App\Http\Controllers\BarcodeController::class, 'generate'])->name('barcode.generate');
 
     Route::put('file-receive/{file}', [App\Http\Controllers\FileMovementController::class, 'receiveUpdate'])->name('file.receive.update');
     Route::get('file-dispatch/{file}', [App\Http\Controllers\FileMovementController::class, 'dispatchView'])->name('file.dispatch');
