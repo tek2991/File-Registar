@@ -16,9 +16,7 @@
                         <div>
                             <x-jet-label for="file_numbers" :value="__('File Numbers')" />
                             <x-jet-label for="file_numbers" class="text-orange-700 font-bold" :value="__('Enter File Numbers seperated by commas , or Next Line')" />
-                            <x-textarea class="block mt-1 w-full" name=file_numbers rows="5">
-                                {{ old('file_numbers') }}
-                            </x-textarea>
+                            <x-textarea class="block mt-1 w-full" name=file_numbers rows="5">{{ old('file_numbers') }}</x-textarea>
                         </div>
 
                         <div class="flex items-center justify-end mt-4 ">
