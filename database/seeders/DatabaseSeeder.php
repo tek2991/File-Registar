@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // Seed the offices
         $this->call(OfficeSeeder::class);
         // Seed the files
-        $this->call(FileSeeder::class);
+        // $this->call(FileSeeder::class);
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
