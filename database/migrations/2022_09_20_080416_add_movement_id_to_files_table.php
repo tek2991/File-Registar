@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('file_number');
-            $table->foreignId('parent_office_id')->constrained('offices');
-            $table->foreignId('current_office_id')->constrained('offices');
-            $table->timestamps();
+        Schema::table('files', function (Blueprint $table) {
+            $table->foreignId('movement_id')->nullable()->constrained('movements');
         });
     }
 
@@ -30,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::table('files', function (Blueprint $table) {
+            $table->dropForeign(['movement_id']);
+            $table->dropColumn('movement_id');
+        });
     }
 };
