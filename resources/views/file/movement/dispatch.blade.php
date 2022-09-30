@@ -40,6 +40,7 @@
                                 <x-jet-label for="to_office_id" :value="__('To Office')" />
                                 <x-input-select id="to_office_id" class="block mt-1 w-full" name="to_office_id"
                                     required>
+                                    <option value="" disabled selected>Select Office</option>
                                     @foreach ($offices as $office)
                                         <option value="{{ $office->id }}">
                                             {{ $office->name . '-' . $office->initials }}</option>

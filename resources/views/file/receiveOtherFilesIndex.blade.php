@@ -38,7 +38,7 @@
                                 <x-input-select id="from_office_id" class="block mt-1 w-full" name="from_office_id"
                                     required>
                                     @foreach ($offices as $office)
-                                        <option value="{{ $office->id }}">
+                                        <option value="{{ $office->id }}" {{ $file->currentOffice->id == $office->id ? 'selected' : '' }}>
                                             {{ $office->name . '-' . $office->initials }}</option>
                                     @endforeach
                                 </x-input-select>

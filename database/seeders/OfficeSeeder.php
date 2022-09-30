@@ -17,6 +17,10 @@ class OfficeSeeder extends Seeder
         // Define offices object array
         $offices = [
             [
+                'initials' => 'CPMG',
+                'name' => 'CPMG Assam circle Office',
+            ],
+            [
                 'initials' => 'CPC',
                 'name' => 'Central Processing Center',
             ],
