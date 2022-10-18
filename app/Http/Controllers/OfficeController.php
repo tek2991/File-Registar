@@ -35,10 +35,13 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
+        $request['initials'] = strtoupper($request['initials']);
+
         $validated = $request->validate([
             'initials' => 'required|max:18|unique:offices',
             'name' => 'required|max:255',
         ]);
+
         $office = Office::create($validated);
         return redirect()->route('office.index', $office)->with('success', 'Office created successfully.');
     }
@@ -74,10 +77,13 @@ class OfficeController extends Controller
      */
     public function update(Request $request, Office $office)
     {
+        $request['initials'] = strtoupper($request['initials']);
+        
         $validated = $request->validate([
             'initials' => 'required|max:18|unique:offices,initials,' . $office->id,
             'name' => 'required|max:255',
         ]);
+
         $office->update($validated);
         return redirect()->route('office.index', $office)->with('success', 'Office updated successfully.');
     }

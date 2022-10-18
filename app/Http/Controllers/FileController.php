@@ -111,6 +111,7 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
+        $request['file_number'] = strtoupper($request['file_number']);
         $validated = $request->validate([
             'parent_office_id' => 'required|exists:offices,id',
             'name' => 'required|string|max:255',
