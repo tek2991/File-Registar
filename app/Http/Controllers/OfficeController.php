@@ -36,7 +36,7 @@ class OfficeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'initials' => 'required|max:18',
+            'initials' => 'required|max:18|unique:offices',
             'name' => 'required|max:255',
         ]);
         $office = Office::create($validated);
@@ -75,7 +75,7 @@ class OfficeController extends Controller
     public function update(Request $request, Office $office)
     {
         $validated = $request->validate([
-            'initials' => 'required|max:18',
+            'initials' => 'required|max:18|unique:offices,initials,' . $office->id,
             'name' => 'required|max:255',
         ]);
         $office->update($validated);
