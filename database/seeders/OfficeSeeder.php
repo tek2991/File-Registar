@@ -21,24 +21,48 @@ class OfficeSeeder extends Seeder
                 'name' => 'CPMG Assam circle Office',
             ],
             [
-                'initials' => 'CPC',
-                'name' => 'Central Processing Center',
+                'initials' => 'DPSHQ',
+                'name' => 'DPS HQ Assam circle Office',
             ],
             [
-                'initials' => 'TECH',
-                'name' => 'Technology',
+                'initials' => 'DPSMBD',
+                'name' => 'DPS Mails & BD Assam circle Office',
             ],
             [
-                'initials' => 'ACCT',
-                'name' => 'Accounts',
+                'initials' => 'DPSPTC',
+                'name' => 'DPS PTC Guwahati',
             ],
             [
                 'initials' => 'CIFA',
                 'name' => 'Chief Internal Finalcial Advisor',
             ],
             [
+                'initials' => 'ACCT',
+                'name' => 'Accounts',
+            ],
+            [
+                'initials' => 'TECH',
+                'name' => 'Technology & PMU',
+            ],
+            [
+                'initials' => 'CBSCPC',
+                'name' => 'Central Processing Center',
+            ],
+            [
+                'initials' => 'FS',
+                'name' => 'Financial Services',
+            ],
+            [
+                'initials' => 'PHLY',
+                'name' => 'Philately',
+            ],
+            [
                 'initials' => 'PLI',
                 'name' => 'Postal Life Insurance',
+            ],
+            [
+                'initials' => 'LEGAL',
+                'name' => 'Legal',
             ],
             [
                 'initials' => 'PG',
@@ -49,19 +73,27 @@ class OfficeSeeder extends Seeder
                 'name' => 'Welfare',
             ],
             [
+                'initials' => 'HIN',
+                'name' => 'Hindi',
+            ],
+            [
                 'initials' => 'STAFF',
                 'name' => 'Staff Section',
             ],
             [
-                'initials' => 'INV',
-                'name' => 'Investigation',
+                'initials' => 'INVIG',
+                'name' => 'Investigation & Vigilance',
             ],
             [
-                'initials' => 'VIG',
-                'name' => 'Vigilance',
+                'initials' => 'RTI',
+                'name' => 'Right to Information',
             ],
             [
-                'initials' => 'PCL',
+                'initials' => 'BLDG',
+                'name' => 'Building',
+            ],
+            [
+                'initials' => 'PH',
                 'name' => 'Parcel Branch',
             ],
             [
@@ -71,6 +103,14 @@ class OfficeSeeder extends Seeder
             [
                 'initials' => 'BD',
                 'name' => 'Business Development',
+            ],
+            [
+                'initials' => 'ESTB',
+                'name' => 'Establishment',
+            ],
+            [
+                'initials' => 'RCDP',
+                'name' => 'Receipt & Dispatch',
             ],
             [
                 'initials' => 'AEE',
