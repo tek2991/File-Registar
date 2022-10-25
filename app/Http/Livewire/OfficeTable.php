@@ -115,18 +115,13 @@ final class OfficeTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('ID', 'id')
-                ->makeInputRange(),
-
             Column::make('INITIALS', 'initials')
                 ->sortable()
-                ->searchable()
-                ->makeInputText(),
+                ->searchable(),
 
             Column::make('NAME', 'name')
                 ->sortable()
-                ->searchable()
-                ->makeInputText(),
+                ->searchable(),
         ]
 ;
     }

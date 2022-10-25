@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\File;
+use App\Models\Office;
 use Milon\Barcode\DNS1D;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -137,11 +138,13 @@ final class FileTable extends PowerGridComponent
 
             Column::make('PARENT OFFICE', 'parent_office_name', 'parent_office_id')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->makeInputSelect(Office::all(), 'name', 'parent_office_id'),
 
-            Column::make('CURRENT OFFICE', 'parent_office_name', 'current_office_id')
+            Column::make('CURRENT OFFICE', 'current_office_name', 'current_office_id')
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->makeInputSelect(Office::all(), 'name', 'current_office_id'),
         ];
     }
 
