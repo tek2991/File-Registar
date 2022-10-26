@@ -50,7 +50,7 @@ final class MovementTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Movement::query();
+        return Movement::query()->with('file');
     }
 
     /*
@@ -68,7 +68,9 @@ final class MovementTable extends PowerGridComponent
      */
     public function relationSearch(): array
     {
-        return [];
+        return [
+            'file' => ['name', 'file_number'],
+        ];
     }
 
     /*
@@ -114,7 +116,8 @@ final class MovementTable extends PowerGridComponent
             })
             ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
             ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Movement $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('updated_at_formatted', fn (Movement $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
+            ->addColumn('remarks');
     }
 
     /*
@@ -164,6 +167,9 @@ final class MovementTable extends PowerGridComponent
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
+
+            Column::make('REMARKS', 'remarks')
+                ->searchable(),
 
         ];
     }
