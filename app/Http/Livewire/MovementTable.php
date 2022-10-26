@@ -104,10 +104,10 @@ final class MovementTable extends PowerGridComponent
             ->addColumn('to_office_name', function (Movement $model) {
                 return e($model->toOffice->name);
             })
-            ->addColumn('received_at')
-            ->addColumn('received_at_formatted', fn (Movement $model) => $model->received_at ? Carbon::parse($model->received_at)->format('d/m/Y H:i:s') : 'NA')
             ->addColumn('dispatched_at')
             ->addColumn('dispatched_at_formatted', fn (Movement $model) => $model->dispatched_at ? Carbon::parse($model->dispatched_at)->format('d/m/Y H:i:s') : 'NA')
+            ->addColumn('received_at')
+            ->addColumn('received_at_formatted', fn (Movement $model) => $model->received_at ? Carbon::parse($model->received_at)->format('d/m/Y H:i:s') : 'NA')
             ->addColumn('user_id')
             ->addColumn('user_name', function (Movement $model) {
                 return e($model->user->name);
@@ -155,15 +155,16 @@ final class MovementTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
+            Column::make('DISPATCHED AT', 'dispatched_at_formatted', 'dispatched_at')
+                ->searchable()
+                ->sortable()
+                ->makeInputDatePicker(),
+                
             Column::make('RECEIVED AT', 'received_at_formatted', 'received_at')
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
 
-            Column::make('DISPATCHED AT', 'dispatched_at_formatted', 'dispatched_at')
-                ->searchable()
-                ->sortable()
-                ->makeInputDatePicker(),
         ];
     }
 
