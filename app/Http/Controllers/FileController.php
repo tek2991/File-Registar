@@ -38,24 +38,29 @@ class FileController extends Controller
      */
     public function store(Request $request)
     {
+        $request['file_number'] = strtoupper($request['file_number']);
         $validated = $request->validate([
             'parent_office_id' => 'required|exists:offices,id',
             'name' => 'required|string|max:255',
+            'file_number' => 'nullable|alpha_num|max:12|unique:files,file_number',
             'should_receive' => 'nullable|boolean',
         ]);
 
         $parent_office = Office::find($validated['parent_office_id']);
-        // get last six digits of timestamp
-        $file_number = substr((string)time(), -6);
-        $file_number = $parent_office->initials . '-' . $file_number;
 
-        // Add file number to validated data
-        $validated['file_number'] = $file_number;
-        // Add current office to validated data
+        // If empty, generate a new file number
+        if (empty($validated['file_number'])) {
+            // get last six digits of timestamp
+            $file_number = substr((string)time(), -6);
+            $file_number = $parent_office->initials . '-' . $file_number;
+            // Add file number to validated data
+            $validated['file_number'] = $file_number;
+            // Add current office to validated data
+        }
         $validated['current_office_id'] = $validated['parent_office_id'];
-
-        $file = File::create($validated);
         
+        $file = File::create($validated);
+
         // Check if file should be received
         if ($request->should_receive) {
             $movement = Movement::create([

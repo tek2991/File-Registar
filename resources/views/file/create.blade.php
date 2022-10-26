@@ -33,6 +33,14 @@
                                 <x-jet-input id="name" class="block mt-1 w-full" type="text" name="name"
                                     :value="old('name')" required autofocus />
                             </div>
+                            {{-- File Number --}}
+                            <div class="mt-4">
+                                <x-jet-label for="file_number" :value="__('File Number (Optional)')" />
+                                <x-jet-label class="italic text-xs text-orange-800" for="file_number" :value="__('Leave blank for system generated file number.')" />
+
+                                <x-jet-input id="file_number" class="block mt-1 w-full" type="text" name="file_number"
+                                    :value="old('file_number')"/>
+                            </div>
                             {{-- Should also reveice check box --}}
                             <div class="mt-4">
                                 <x-jet-label for="should receive" :value="__('Should also receive file?')" class="font-bold text-orange-700" />
