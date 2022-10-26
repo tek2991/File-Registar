@@ -55,9 +55,9 @@
                                     <tr>
                                         <td class="border px-4 py-2" style="width:50%">
                                             <div>
-                                                <p class="font-bold">{{ $file->name }}</p>
+                                                <p class="font-bold">Name: {{ $file->name }}</p>
                                                 <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
-                                                <p class="font-bold">{{ $file->file_number }} </p>
+                                                <p class="font-bold">File No.:{{ $file->file_number }} </p>
                                             </div>
                                         </td>
                                         {{-- If it is the last iteration and another data column and close the row --}}
@@ -71,9 +71,9 @@
                                 {{-- Add a data column --}}
                                 <td class="border px-4 py-2" style="width:50%">
                                     <div>
-                                        <p class="font-bold">{{ $file->name }}</p>
+                                        <p class="font-bold">Name: {{ $file->name }}</p>
                                         <img src="{{ $barcode_src }}" alt="barcode" class="w-30 h-14">
-                                        <p class="font-bold">{{ $file->file_number }} </p>
+                                        <p class="font-bold">File No.: {{ $file->file_number }} </p>
                                     </div>
                                 </td>
                                 </tr>
