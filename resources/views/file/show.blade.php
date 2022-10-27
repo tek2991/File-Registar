@@ -42,7 +42,7 @@
                         </div>
                         <div>
                             @php
-                                $barcode_src = 'data:image/png;base64,' . DNS1D::getBarcodePNG($file->file_number, 'C39+');
+                                $barcode_src = 'data:image/png;base64,' . DNS1D::getBarcodePNG($file->file_number, 'C128A');
                             @endphp
                             <x-jet-label for="barcode" :value="__('Barcode')" />
                             <div>

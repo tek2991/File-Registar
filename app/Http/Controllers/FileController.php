@@ -42,7 +42,7 @@ class FileController extends Controller
         $validated = $request->validate([
             'parent_office_id' => 'required|exists:offices,id',
             'name' => 'required|string|max:255',
-            'file_number' => 'nullable|string|max:48|unique:files,file_number',
+            'file_number' => 'nullable|string|max:39|unique:files,file_number',
             'should_receive' => 'nullable|boolean',
         ]);
 
@@ -120,7 +120,7 @@ class FileController extends Controller
         $validated = $request->validate([
             'parent_office_id' => 'required|exists:offices,id',
             'name' => 'required|string|max:255',
-            'file_number' => 'required|string|max:48|unique:files,file_number,' . $file->id,
+            'file_number' => 'required|string|max:39|unique:files,file_number,' . $file->id,
         ]);
 
         $file->update($validated);

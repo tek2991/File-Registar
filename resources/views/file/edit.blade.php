@@ -33,6 +33,7 @@
                             </div>
                             <div>
                                 <x-jet-label for="file_number" :value="__('File Number')" />
+                                <x-jet-label class="italic text-xs text-orange-800" for="file_number" :value="__('Maximum 39 characters')" />
                                 <x-jet-input id="file_number" class="block mt-1 w-full" type="text" name="file_number" required
                                     value="{{ $file->file_number }}" />
                             </div>

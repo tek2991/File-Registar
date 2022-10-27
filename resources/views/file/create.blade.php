@@ -36,6 +36,7 @@
                             {{-- File Number --}}
                             <div class="mt-4">
                                 <x-jet-label for="file_number" :value="__('File Number (Optional)')" />
+                                <x-jet-label class="italic text-xs text-orange-800" for="file_number" :value="__('Maximum 39 characters')" />
                                 <x-jet-label class="italic text-xs text-orange-800" for="file_number" :value="__('Leave blank for system generated file number.')" />
 
                                 <x-jet-input id="file_number" class="block mt-1 w-full" type="text" name="file_number"
