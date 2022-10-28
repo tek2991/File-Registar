@@ -58,7 +58,8 @@ final class ExpectedFileTable extends PowerGridComponent
             ->whereIn('files.id', $expectedFileIds)
             ->join('offices as parent_office', 'files.parent_office_id', '=', 'parent_office.id')
             ->join('offices as current_office', 'files.current_office_id', '=', 'current_office.id')
-            ->select('files.*', 'parent_office.name as parent_office_name', 'current_office.name as current_office_name');
+            ->join('movements', 'files.movement_id', '=', 'movements.id')
+            ->select('files.*', 'parent_office.name as parent_office_name', 'current_office.name as current_office_name', 'movements.dispatched_at as dispatched_at');
     }
 
     /*
@@ -110,8 +111,10 @@ final class ExpectedFileTable extends PowerGridComponent
             ->addColumn('parent_office_name')
             ->addColumn('current_office_id')
             ->addColumn('current_office_name')
-            ->addColumn('created_at_formatted', fn (File $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (File $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('dispatched_at')
+            ->addColumn('dispatched_at_formatted', fn (File $file) => Carbon::parse($file->dispatched_at)->format('d/m/Y H:i'))
+            ->addColumn('created_at_formatted', fn (File $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i'))
+            ->addColumn('updated_at_formatted', fn (File $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i'));
     }
 
     /*
@@ -143,9 +146,8 @@ final class ExpectedFileTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('CURRENT OFFICE', 'parent_office_name', 'current_office_id')
-                ->sortable()
-                ->searchable(),
+            Column::make('DISPATCHED AT', 'dispatched_at_formatted', 'dispatched_at')
+                ->makeInputDatePicker(),
         ];
     }
 

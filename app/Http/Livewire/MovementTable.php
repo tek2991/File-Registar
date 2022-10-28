@@ -13,6 +13,16 @@ final class MovementTable extends PowerGridComponent
 {
     use ActionButton;
 
+    public $fileId;
+    public string $sortField = 'id';
+    public string $sortDirection = 'desc';
+
+    public function __construct($fileId)
+    {
+        $this->fileId = $fileId;
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     |  Features Setup
@@ -50,7 +60,13 @@ final class MovementTable extends PowerGridComponent
      */
     public function datasource(): Builder
     {
-        return Movement::query()->with('file');
+        $query = Movement::query();
+
+        if ($this->fileId !== null && $this->fileId !== '') {
+            $query->where('file_id', $this->fileId);
+        }
+
+        return $query->with('file');
     }
 
     /*
@@ -107,16 +123,16 @@ final class MovementTable extends PowerGridComponent
                 return e($model->toOffice->name);
             })
             ->addColumn('dispatched_at')
-            ->addColumn('dispatched_at_formatted', fn (Movement $model) => $model->dispatched_at ? Carbon::parse($model->dispatched_at)->format('d/m/Y H:i:s') : 'NA')
+            ->addColumn('dispatched_at_formatted', fn (Movement $model) => $model->dispatched_at ? Carbon::parse($model->dispatched_at)->format('d/m/Y H:i') : 'NA')
             ->addColumn('received_at')
-            ->addColumn('received_at_formatted', fn (Movement $model) => $model->received_at ? Carbon::parse($model->received_at)->format('d/m/Y H:i:s') : 'NA')
+            ->addColumn('received_at_formatted', fn (Movement $model) => $model->received_at ? Carbon::parse($model->received_at)->format('d/m/Y H:i') : 'NA')
             ->addColumn('user_id')
             ->addColumn('user_name', function (Movement $model) {
                 return e($model->user->name);
             })
-            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (Movement $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'))
+            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i'))
+            ->addColumn('created_at_formatted', fn (Movement $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i'))
+            ->addColumn('updated_at_formatted', fn (Movement $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i'))
             ->addColumn('remarks');
     }
 
@@ -162,7 +178,7 @@ final class MovementTable extends PowerGridComponent
                 ->searchable()
                 ->sortable()
                 ->makeInputDatePicker(),
-                
+
             Column::make('RECEIVED AT', 'received_at_formatted', 'received_at')
                 ->searchable()
                 ->sortable()

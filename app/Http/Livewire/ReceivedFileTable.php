@@ -58,7 +58,8 @@ final class ReceivedFileTable extends PowerGridComponent
             ->whereIn('files.id', $receivedFileIds)
             ->join('offices as parent_office', 'files.parent_office_id', '=', 'parent_office.id')
             ->join('offices as current_office', 'files.current_office_id', '=', 'current_office.id')
-            ->select('files.*', 'parent_office.name as parent_office_name', 'current_office.name as current_office_name');
+            ->join('movements', 'files.movement_id', '=', 'movements.id')
+            ->select('files.*', 'parent_office.name as parent_office_name', 'current_office.name as current_office_name', 'movements.received_at as received_at');
     }
 
     /*
@@ -109,8 +110,10 @@ final class ReceivedFileTable extends PowerGridComponent
             ->addColumn('parent_office_name')
             ->addColumn('current_office_id')
             ->addColumn('current_office_name')
-            ->addColumn('created_at_formatted', fn (File $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'))
-            ->addColumn('updated_at_formatted', fn (File $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i:s'));
+            ->addColumn('received_at')
+            ->addColumn('received_at_formatted', fn (File $file) => Carbon::parse($file->received_at)->format('d/m/Y H:i'))
+            ->addColumn('created_at_formatted', fn (File $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i'))
+            ->addColumn('updated_at_formatted', fn (File $model) => Carbon::parse($model->updated_at)->format('d/m/Y H:i'));
     }
 
     /*
@@ -142,9 +145,8 @@ final class ReceivedFileTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('CURRENT OFFICE', 'current_office_name', 'current_office_id')
-                ->sortable()
-                ->searchable(),
+            Column::make('RECEIVED AT', 'received_at_formatted', 'received_at')
+                ->makeInputDatePicker()
         ];
     }
 
