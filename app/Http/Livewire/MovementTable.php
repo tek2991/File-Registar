@@ -241,7 +241,7 @@ final class MovementTable extends PowerGridComponent
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($movement) => $movement->received_at || null && $movement->user_id != auth()->user()->id)
+                ->when(fn($movement) => $movement->received_at != null || $movement->user_id != auth()->user()->id)
                 ->hide(),
         ];
     }
