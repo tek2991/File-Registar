@@ -204,21 +204,21 @@ final class MovementTable extends PowerGridComponent
      * @return array<int, Button>
      */
 
-    /*
     public function actions(): array
     {
-       return [
-           Button::make('edit', 'Edit')
-               ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
-               ->route('movement.edit', ['movement' => 'id']),
+        return [
+            Button::make('edit', 'Edit')
+                ->class('bg-indigo-500 cursor-pointer text-white px-3 py-2.5 m-1 rounded text-sm')
+                ->route('movement.edit', ['movement' => 'id']),
 
+            /*
            Button::make('destroy', 'Delete')
                ->class('bg-red-500 cursor-pointer text-white px-3 py-2 m-1 rounded text-sm')
                ->route('movement.destroy', ['movement' => 'id'])
                ->method('delete')
+               */
         ];
     }
-    */
 
     /*
     |--------------------------------------------------------------------------
@@ -234,16 +234,16 @@ final class MovementTable extends PowerGridComponent
      * @return array<int, RuleActions>
      */
 
-    /*
+    
     public function actionRules(): array
     {
        return [
 
            //Hide button edit for ID 1
             Rule::button('edit')
-                ->when(fn($movement) => $movement->id === 1)
+                ->when(fn($movement) => $movement->received_at || null && $movement->user_id != auth()->user()->id)
                 ->hide(),
         ];
     }
-    */
+    
 }

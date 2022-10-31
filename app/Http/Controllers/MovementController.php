@@ -57,7 +57,14 @@ class MovementController extends Controller
      */
     public function edit(Movement $movement)
     {
-        //
+        // Verify if the user is the owner of the movement and if the file is not received
+        if ($movement->user_id == auth()->user()->id && $movement->received_at == null) {
+            $file = $movement->file;
+            $offices = \App\Models\Office::all();
+            return view('movement.edit', compact('movement', 'file', 'offices'));
+        } else {
+            return redirect()->route('file.index');
+        }
     }
 
     /**
@@ -69,7 +76,18 @@ class MovementController extends Controller
      */
     public function update(Request $request, Movement $movement)
     {
-        //
+        // Verify if the user is the owner of the movement and if the file is not received
+        if ($movement->user_id == auth()->user()->id && $movement->received_at == null) {
+            $validated = $request->validate([
+                'to_office_id' => 'required|exists:offices,id',
+                'remarks' => 'nullable|string|max:255',
+            ]);
+
+            $movement->update($validated);
+            return redirect()->route('file.index')->with('success', 'Movement updated successfully: '. $movement->file->file_number);
+        } else {
+            return redirect()->route('file.index');
+        }
     }
 
     /**
