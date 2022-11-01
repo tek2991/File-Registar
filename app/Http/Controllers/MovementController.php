@@ -84,6 +84,10 @@ class MovementController extends Controller
             ]);
 
             $movement->update($validated);
+            $file = $movement->file;
+            $file->update([
+                'current_office_id' => $movement->to_office_id,
+            ]);
             return redirect()->route('file.index')->with('success', 'Movement updated successfully: '. $movement->file->file_number);
         } else {
             return redirect()->route('file.index');
