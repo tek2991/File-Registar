@@ -21,7 +21,11 @@ class ReceiveOtherFilesController extends Controller
 
         // Check if file has a movement without a received_at
         if ($file->movement && $file->movement->received_at == null) {
-            return redirect()->back()->with('error', 'File already has a movement to be received at ' . $file->movement->toOffice->name);
+            // Complete the movement
+            $file->movement->update([
+                'received_at' => now(),
+                'remarks' => $file->movement->remarks . ' - ' . 'File deemed received',
+            ]);
         }
 
         // Create a new movement
